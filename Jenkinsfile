@@ -31,7 +31,7 @@ pipeline {
         stage('Push') {
             steps {
                 script {
-                    if (gitBranch.contains('release')){
+                    if (gitBranch.contains('master')){
                         def buildTag = "build-${BUILD_NUMBER}"
                         def gitUrl = "https://${env.GITHUB_USERNAME}:${env.GITHUB_PASSWORD}@github.com/ushakiran-mannam/spring-app-demo.git"
                         sh "git tag ${buildTag}"
@@ -43,9 +43,11 @@ pipeline {
                             docker tag ${customLocalImage} ${ECR_REGISTRY}/${ECR_REPO}:${buildTag}
                             docker tag ${customLocalImage} ${ECR_REGISTRY}/${ECR_REPO}:latest
                             echo "${ECR_REGISTRY}/${ECR_REPO}"
-                            docker push ${ECR_REGISTRY}/${ECR_REPO}
                         """
-                    } else if (gitBranch == 'master') {
+                        sh '$(aws ecr get-login --registry-ids 548607860836 --no-include-email)'
+                        sh "docker push ${ECR_REGISTRY}/${ECR_REPO}"
+                        
+                    } else if (gitBranch == 'release') {
                         sh "docker tag ${customLocalImage} ${dockerPublisherName}/${dockerRepoName}:build-${BUILD_NUMBER}"
                         sh "docker tag ${customLocalImage} ${dockerPublisherName}/${dockerRepoName}:latest"
                         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
