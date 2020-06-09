@@ -61,5 +61,5 @@ def localDeploy(Map args) {
 }
 
 void sendSlackMessage(String message) {
-    slackSend botUser: true, channel: 'jenkins-slack-test', failOnError: true, message: "${message}", teamDomain: 'codaacademy2020', tokenCredentialId: 'ushakiran-codaacademy'
+    slackSend botUser: false, channel: 'jenkins-slack-test', failOnError: true, message: "${message}", teamDomain: 'codaacademy2020', tokenCredentialId: 'ushakiran-codaacademy'
 }
