@@ -1,4 +1,4 @@
-def dockerImage = "${env.ECS_REGISTRY}/${env.ECR_REPO}:${params.imageTag}"
+def dockerImage = "${env.ECR_REGISTRY}/${env.ECR_REPO}:${params.imageTag}"
 
 def deploymentEnv = "http://18.188.234.18"
 def appPort = "9080"
