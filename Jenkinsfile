@@ -37,7 +37,7 @@ pipeline {
                         sh "git tag ${buildTag}"
                         sh "git push ${gitUrl} ${buildTag}"
                         def ECR_REGISTRY = env.ECR_REGISTRY
-                        def ECR_REPO = env.SIMPLE_JAVA_ECR_REPO
+                        def ECR_REPO = env.ECR_REPO
 
                         sh """
                             docker tag ${customLocalImage} ${ECR_REGISTRY}/${ECR_REPO}:${buildTag}
